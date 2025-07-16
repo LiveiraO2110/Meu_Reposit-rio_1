@@ -188,7 +188,7 @@ class GerenciamentoDados():
 
         painel = ods_escolhida.filter(like='Painel').columns.tolist()
 
-        GerenciamentoDados.Graficos_painel(painel, ods_escolhida)
+        GerenciamentoDados.Definir_painel(painel, ods_escolhida)
 
         with pd.ExcelWriter(f"DataFrame da ODS {numero_ods}.xlsx") as writer:
             ods_escolhida.to_excel(writer, sheet_name=f"ODS_{numero_ods}_IDSC-BR_2024.xlsx", index=False)
@@ -220,7 +220,7 @@ class GerenciamentoDados():
         return df
 
     @staticmethod
-    def Graficos_painel(painel, df):
+    def Definir_painel(painel, df):
         i=0
         while i < len(painel):
             coluna_painel = painel[i]
