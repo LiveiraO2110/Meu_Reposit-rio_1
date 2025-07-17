@@ -188,11 +188,13 @@ class GerenciamentoDados():
 
         painel = ods_escolhida.filter(like='Painel').columns.tolist()
 
-        GerenciamentoDados.Definir_painel(painel, ods_escolhida)
-
-        with pd.ExcelWriter(f"DataFrame da ODS {numero_ods}.xlsx") as writer:
-            ods_escolhida.to_excel(writer, sheet_name=f"ODS_{numero_ods}_IDSC-BR_2024.xlsx", index=False)
-            livro.to_excel(writer, sheet_name="Livro de Códigos", index=False)
+        ods_escolhida = GerenciamentoDados.Definir_painel(painel, ods_escolhida, coluna_normalizados)
+        print('Deseja baiaxr o Data Frame ?')
+        op = input('S/N: ')
+        if op == 'S':
+            coluna_df = ods_escolhida.filter(like="Normalizado").columns.tolist()
+            GerenciamentoDados.limpeza_dados(ods_escolhida, coluna_df, livro, numero_ods)
+            GerenciamentoDados.Baixar_df(ods_escolhida, livro, numero_ods)
 
     @staticmethod
     def Criar_Graficos(numero_ods, ano):
@@ -210,7 +212,8 @@ class GerenciamentoDados():
     def limpeza_dados(df, colunas, livro, numero_ods):
         livro = livro[livro['ODS'] == numero_ods]
         indices = livro['Indicador'].tolist()
-        colunas.pop(0)
+        if 'MUNICIPIO' in colunas:
+            colunas.pop(0)
         i=0
         while i < len(indices):
             colunas_antigas = colunas[i]
@@ -220,12 +223,24 @@ class GerenciamentoDados():
         return df
 
     @staticmethod
-    def Definir_painel(painel, df):
+    def Definir_painel(painel, df, coluna):
+        coluna.pop(0)
         i=0
+        print('Alto -> green \n Médio -> yellow\n Baixo -> orange\n Muito baixo -> red')
+        cor = input('Qual cor?')
         while i < len(painel):
             coluna_painel = painel[i]
-            painel_green = df[df[coluna_painel] == 'green']
+            painel_cor = df[df[coluna_painel] == cor]
 
-            if not painel_green.empty:
-                print(painel_green['MUNICIPIO'])
+            if not painel_cor.empty:
+                print(f"Painel do Índice: {coluna[i]}")
+                print(painel_cor['MUNICIPIO'])
+                df.rename(columns={painel[i]:f"Painel do Índice: {coluna[i]}"}, inplace=True) 
             i+=1
+        return df
+    
+    @staticmethod
+    def Baixar_df(df, livro, ods):
+        with pd.ExcelWriter(f"DataFrame da ODS {ods}.xlsx") as writer:
+            df.to_excel(writer, sheet_name=f"ODS_{ods}_IDSC-BR_2024.xlsx", index=False)
+            livro.to_excel(writer, sheet_name="Livro de Códigos", index=False)
