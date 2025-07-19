@@ -24,4 +24,5 @@ class TelaPainel(TelaBase):
         self.criar_botao("Médio", lambda:Gerenciamento.Definir_painel("yellow")).pack(pady=30)
         self.criar_botao("Baixo", lambda:Gerenciamento.Definir_painel("orange")).pack(pady=30)
         self.criar_botao("Muito Baixo", lambda:Gerenciamento.Definir_painel("red")).pack(pady=30)
-    
+
+        print(Gerenciamento.lista_painel)

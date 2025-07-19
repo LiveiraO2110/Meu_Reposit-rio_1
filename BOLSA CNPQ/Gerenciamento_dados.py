@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 class GerenciamentoDados():
+    def __init__(self):
+        self.lista_painel = None
 
     @staticmethod
     def filtrar_ods(cidades_rs, numero_ods):
@@ -149,13 +151,10 @@ class GerenciamentoDados():
             painel_cor = df[df[coluna_painel] == cor]
 
             if not painel_cor.empty:
-                print(f"Painel do Índice: {coluna[i]}")
-                print(painel_cor['MUNICIPIO'])
                 df.rename(columns={painel[i]:f"Painel do Índice: {coluna[i]}"}, inplace=True) 
                 df.rename(columns={ano[i]:"Ano que foi coletado"}, inplace=True) 
             i+=1
 
-        print(df)
         GerenciamentoDados.Baixar_df(df, livro)
     
     @staticmethod
