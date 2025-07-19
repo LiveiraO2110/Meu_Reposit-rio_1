@@ -42,3 +42,4 @@ class TelaODS(TelaBase):
         Gerenciamento = GerenciamentoDados()
         
         Gerenciamento.Criar_Graficos(ODS, controle.arquivo_selecionado)
+        controle.mostrar_tela("TelaPainel")

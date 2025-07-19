@@ -3,6 +3,7 @@ from telas.Tela_inicial import TelaInicial
 from telas.Tela_ods import TelaODS
 from telas.Tela_ano import TelaAno
 from telas.Tela_de_espera import TelaDeEspera
+from telas.Tela_Painel import TelaPainel
 
 # Classe principal da aplicação
 class Aplicacao(tk.Tk):
@@ -16,7 +17,7 @@ class Aplicacao(tk.Tk):
         # Dicionário de telas (frames)
         self.telas = {}
 
-        for Tela in (TelaInicial, TelaODS, TelaAno, TelaDeEspera):
+        for Tela in (TelaInicial, TelaODS, TelaAno, TelaDeEspera, TelaPainel):
             frame = Tela(self, self)
             self.telas[Tela.__name__] = frame
             frame.grid(row=0, column=0, sticky="nsew")
