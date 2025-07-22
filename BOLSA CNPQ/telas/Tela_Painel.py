@@ -8,7 +8,7 @@ class TelaPainel(TelaBase):
         super().__init__(pai, controle)
         
         tk.Label(self, 
-        text = "Pontuação ODS",
+        text = "Pontuação/Painel das Cidades",
         bg="#363636",
         fg="white",
         font=("Arial", 20, "bold"),
@@ -24,5 +24,4 @@ class TelaPainel(TelaBase):
         self.criar_botao("Médio", lambda:Gerenciamento.Definir_painel("yellow")).pack(pady=30)
         self.criar_botao("Baixo", lambda:Gerenciamento.Definir_painel("orange")).pack(pady=30)
         self.criar_botao("Muito Baixo", lambda:Gerenciamento.Definir_painel("red")).pack(pady=30)
-
-        print(Gerenciamento.lista_painel)
+        self.criar_botao("Ir para levantamento de Dados", lambda:print('CU')).pack(pady=30)

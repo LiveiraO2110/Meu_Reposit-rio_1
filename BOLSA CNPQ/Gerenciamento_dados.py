@@ -3,9 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 class GerenciamentoDados():
-    def __init__(self):
-        self.lista_painel = None
-
     @staticmethod
     def filtrar_ods(cidades_rs, numero_ods):
         municipio = 'MUNICIPIO'
@@ -145,18 +142,74 @@ class GerenciamentoDados():
         painel = df.filter(like='Painel').columns.tolist()
         coluna = livro['Indicador'].tolist()
         ano = df.filter(like='year').columns.tolist()
+        ods = livro['ODS'].values
+        ods = ods[0]
+
+        if cor == "green":
+            pontuacao = "Alta"
+            df_painel = df[df['Goal ' + str(ods) + ' Score'] >= 60]
+        elif cor == "yellow":
+            pontuacao = "Média"
+            df_painel = df[df['Goal ' + str(ods) + ' Score'] <= 59.99]
+            df_painel = df_painel[df_painel['Goal ' + str(ods) + ' Score'] >= 50]
+        elif cor == "orange":
+            pontuacao = "Baixa"
+            df_painel = df[df['Goal ' + str(ods) + ' Score'] <= 49.99]
+            df_painel = df_painel[df_painel['Goal ' + str(ods) + ' Score'] >= 40]
+        elif cor == "red":
+            pontuacao = "Muito Baixa"
+            df_painel = df[df['Goal ' + str(ods) + ' Score'] <= 39.99]
+        
+        GerenciamentoDados.Grafico_painel_ODS(df_painel, pontuacao, ods)
+
         i=0
         while i < len(painel):
-            coluna_painel = painel[i]
-            painel_cor = df[df[coluna_painel] == cor]
-
-            if not painel_cor.empty:
-                df.rename(columns={painel[i]:f"Painel do Índice: {coluna[i]}"}, inplace=True) 
-                df.rename(columns={ano[i]:"Ano que foi coletado"}, inplace=True) 
+            df_painel = df[df[painel[i]] == cor]
+            df_painel = df_painel.sort_values(by=coluna[i], ascending=False)
+            indice = coluna[i]
+            GerenciamentoDados.Grafico_painel(df_painel, pontuacao, indice)
             i+=1
+        
+        #i=0
+        #while i < len(painel):
+            #coluna_painel = painel[i]
+            #df_cor = df[df[coluna_painel] == cor]
+            #df.rename(columns={painel[i]:f"Painel do Índice: {coluna[i]}"}, inplace=True) 
+            #df.rename(columns={ano[i]:"Ano que foi coletado"}, inplace=True) 
+            #i+=1
 
         GerenciamentoDados.Baixar_df(df, livro)
     
+    @staticmethod
+    def Grafico_painel(df, pontuacao, indice):
+            if df.empty:
+                print(f"Nenhum dado encontrado para a pontuação: {pontuacao}")
+            else:
+                df.plot(x='MUNICIPIO', y=indice, kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e'])
+
+                plt.title(f'Cidades com a pontuação {pontuacao}')
+                plt.ylabel('Puntuação')
+                plt.xlabel('Cidade')
+                plt.grid(axis='y', linestyle='--', alpha=0.7)
+                plt.legend(loc='upper right')
+                plt.tight_layout()
+                plt.show()
+
+    @staticmethod
+    def Grafico_painel_ODS(df, pontuacao, ods):
+            if df.empty:
+                print(f"Nenhum dado encontrado para a pontuação: {pontuacao}")
+            else:
+                df.plot(x='MUNICIPIO', y=f'Goal {ods} Score', kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e'])
+
+                plt.title(f'Cidades com a pontuação {pontuacao} na ODS {ods}')
+                plt.ylabel('Puntuação')
+                plt.xlabel('Cidade')
+                plt.grid(axis='y', linestyle='--', alpha=0.7)
+                plt.legend(loc='upper right')
+                plt.tight_layout()
+                plt.show()
+
     @staticmethod
     def Baixar_df(df, livro):
         with pd.ExcelWriter(f"DataFrame da ODS.xlsx") as writer:
