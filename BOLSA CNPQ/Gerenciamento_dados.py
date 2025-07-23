@@ -170,13 +170,13 @@ class GerenciamentoDados():
             GerenciamentoDados.Grafico_painel(df_painel, pontuacao, indice)
             i+=1
         
-        #i=0
-        #while i < len(painel):
-            #coluna_painel = painel[i]
-            #df_cor = df[df[coluna_painel] == cor]
-            #df.rename(columns={painel[i]:f"Painel do Índice: {coluna[i]}"}, inplace=True) 
-            #df.rename(columns={ano[i]:"Ano que foi coletado"}, inplace=True) 
-            #i+=1
+        i=0
+        while i < len(painel):
+            coluna_painel = painel[i]
+            df_cor = df[df[coluna_painel] == cor]
+            df.rename(columns={painel[i]:f"Painel do Índice: {coluna[i]}"}, inplace=True) 
+            df.rename(columns={ano[i]:"Ano que foi coletado"}, inplace=True) 
+            i+=1
 
         GerenciamentoDados.Baixar_df(df, livro)
     
@@ -209,6 +209,12 @@ class GerenciamentoDados():
                 plt.legend(loc='upper right')
                 plt.tight_layout()
                 plt.show()
+
+    @staticmethod
+    def LevantamentoDados(dado):
+        arquivo = 'DataFrame da ODS.xlsx'
+        df = pd.read_excel(arquivo, sheet_name='ODS_IDSC-BR_2024.xlsx')
+        livro = pd.read_excel(arquivo, sheet_name='Livro de Códigos')
 
     @staticmethod
     def Baixar_df(df, livro):
