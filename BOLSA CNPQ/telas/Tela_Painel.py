@@ -20,8 +20,8 @@ class TelaPainel(TelaBase):
 
         Gerenciamento = GerenciamentoDados()
 
-        self.criar_botao("Alto", lambda:Gerenciamento.Definir_painel("green")).pack(pady=30)
-        self.criar_botao("Médio", lambda:Gerenciamento.Definir_painel("yellow")).pack(pady=30)
-        self.criar_botao("Baixo", lambda:Gerenciamento.Definir_painel("orange")).pack(pady=30)
-        self.criar_botao("Muito Baixo", lambda:Gerenciamento.Definir_painel("red")).pack(pady=30)
-        self.criar_botao("Ir para levantamento de Dados", lambda:controle.mostrar_tela('TelaDados')).pack(pady=30)
+        self.criar_botao("Alto", lambda:Gerenciamento.Definir_painel("green")).pack(pady=20)
+        self.criar_botao("Médio", lambda:Gerenciamento.Definir_painel("yellow")).pack(pady=20)
+        self.criar_botao("Baixo", lambda:Gerenciamento.Definir_painel("orange")).pack(pady=20)
+        self.criar_botao("Muito Baixo", lambda:Gerenciamento.Definir_painel("red")).pack(pady=20)
+        self.criar_botao("Ir para levantamento de Dados", lambda:controle.mostrar_tela('TelaDados')).pack(pady=20)

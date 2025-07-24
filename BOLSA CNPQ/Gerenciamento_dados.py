@@ -1,5 +1,6 @@
 from pathlib import Path
 import pandas as pd
+import tkinter as tk
 import matplotlib.pyplot as plt
 
 class GerenciamentoDados():
@@ -125,12 +126,12 @@ class GerenciamentoDados():
         while i < len(indices):
             colunas_antigas = colunas[i]
             colunas_novas = indices[i]
-            df.rename(columns={colunas_antigas:f"{colunas_novas} (de 0 a 100)"}, inplace=True) 
+            df.rename(columns={colunas_antigas:f"Normalizado: {colunas_novas}"}, inplace=True) 
             i+=1
         while l < len(indices):
             colunas_antigas = nome_indices[l]
             colunas_novas = indices[l]
-            df.rename(columns={colunas_antigas:colunas_novas}, inplace=True) 
+            df.rename(columns={colunas_antigas:f'Índice: {colunas_novas}'}, inplace=True) 
             l+=1 
         return df
 
@@ -144,7 +145,6 @@ class GerenciamentoDados():
         ano = df.filter(like='year').columns.tolist()
         ods = livro['ODS'].values
         ods = ods[0]
-
         if cor == "green":
             pontuacao = "Alta"
             df_painel = df[df['Goal ' + str(ods) + ' Score'] >= 60]
@@ -159,13 +159,13 @@ class GerenciamentoDados():
         elif cor == "red":
             pontuacao = "Muito Baixa"
             df_painel = df[df['Goal ' + str(ods) + ' Score'] <= 39.99]
-        
+
         GerenciamentoDados.Grafico_painel_ODS(df_painel, pontuacao, ods)
 
         i=0
         while i < len(painel):
             df_painel = df[df[painel[i]] == cor]
-            df_painel = df_painel.sort_values(by=coluna[i], ascending=False)
+            df_painel = df_painel.sort_values(by=f'Índice: {coluna[i]}', ascending=False)
             indice = coluna[i]
             GerenciamentoDados.Grafico_painel(df_painel, pontuacao, indice)
             i+=1
@@ -185,7 +185,7 @@ class GerenciamentoDados():
             if df.empty:
                 print(f"Nenhum dado encontrado para a pontuação: {pontuacao}")
             else:
-                df.plot(x='MUNICIPIO', y=indice, kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e'])
+                df.plot(x='MUNICIPIO', y=f'Índice: {indice}', kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e'])
 
                 plt.title(f'Cidades com a pontuação {pontuacao}')
                 plt.ylabel('Puntuação')
@@ -215,6 +215,54 @@ class GerenciamentoDados():
         arquivo = 'DataFrame da ODS.xlsx'
         df = pd.read_excel(arquivo, sheet_name='ODS_IDSC-BR_2024.xlsx')
         livro = pd.read_excel(arquivo, sheet_name='Livro de Códigos')
+        ods = livro['ODS'].values
+        ods = ods[0]
+
+        if dado == "media":
+            media = df[f'Goal {ods} Score'].mean(numeric_only=True)
+            if media >= 60:
+                pontuacao = "Alta"
+            elif media >= 60 and media >= 50:
+                pontuacao = "Média"
+            elif media <= 49.99 and media >= 40:
+                pontuacao = "Baixa"
+            elif media <= 39.99:
+                pontuacao = "Muito Baixa"
+
+            df_painel = df[df['Goal ' + str(ods) + ' Score'] <= 39.99]
+            caixa = tk.Toplevel()
+            caixa.title("Media da Pontuação das ODS")
+            caixa.geometry("600x300")
+            caixa.configure(bg = "#363636")
+            tk.Label(caixa, text=f"{media}\nA média da pontuação das cidades é {pontuacao}", bg="#f0f0f0", font=("Arial", 11, "bold")).pack(pady=10)
+        elif dado == "min":
+            min = df.tail(1)
+            max = df.head(1)
+            minmax = pd.concat([min, max], ignore_index=True)
+            
+            minmax.plot(x='MUNICIPIO', y=f'Goal {ods} Score', kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e'])
+
+            plt.title(f'Mínimo e Máximo da ODS {ods}')
+            plt.ylabel('Puntuação')
+            plt.xlabel('Cidade')
+            plt.grid(axis='y', linestyle='--', alpha=0.7)
+            plt.legend(loc='upper right')
+            plt.tight_layout()
+            plt.show()
+        elif dado == "desvio":
+            desvio_padrao = df[f'Goal {ods} Score'].std(numeric_only=True)
+            caixa = tk.Toplevel()
+            caixa.title("Desvio Padrão da Pontuação das ODS")
+            caixa.geometry("600x300")
+            caixa.configure(bg = "#363636")
+            tk.Label(caixa, text=desvio_padrao, bg="#f0f0f0", font=("Arial", 11, "bold")).pack(pady=10)
+        elif dado == "mediana":
+            med = df[f'Goal {ods} Score'].median(numeric_only=True)
+            caixa = tk.Toplevel()
+            caixa.title("A mediana da Pontuação das ODS")
+            caixa.geometry("600x300")
+            caixa.configure(bg = "#363636")
+            tk.Label(caixa, text=med, bg="#f0f0f0", font=("Arial", 11, "bold")).pack(pady=10)
 
     @staticmethod
     def Baixar_df(df, livro):

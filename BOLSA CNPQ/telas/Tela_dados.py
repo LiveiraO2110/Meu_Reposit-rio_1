@@ -20,8 +20,8 @@ class TelaDados(TelaBase):
 
         Gerenciamento = GerenciamentoDados()
 
-        self.criar_botao("Ver média", lambda:Gerenciamento.LevantamentoDados("media")).pack(pady=30)
-        self.criar_botao("Ver mínimo e máximo", lambda:Gerenciamento.LevantamentoDados("min")).pack(pady=30)
-        self.criar_botao("Desvio padrão", lambda:Gerenciamento.LevantamentoDados("desvio")).pack(pady=30)
-        self.criar_botao("Ver mediana", lambda:Gerenciamento.LevantamentoDados("mediana")).pack(pady=30)
-        self.criar_botao("Sair", lambda:controle.destroy).pack(pady=30)
+        self.criar_botao("Ver média", lambda:Gerenciamento.LevantamentoDados("media")).pack(pady=20)
+        self.criar_botao("Ver mínimo e máximo", lambda:Gerenciamento.LevantamentoDados("min")).pack(pady=20)
+        self.criar_botao("Desvio padrão", lambda:Gerenciamento.LevantamentoDados("desvio")).pack(pady=20)
+        self.criar_botao("Ver mediana", lambda:Gerenciamento.LevantamentoDados("mediana")).pack(pady=20)
+        self.criar_botao("Sair", controle.destroy).pack(pady=20)
