@@ -222,14 +222,13 @@ class GerenciamentoDados():
             media = df[f'Goal {ods} Score'].mean(numeric_only=True)
             if media >= 60:
                 pontuacao = "Alta"
-            elif media >= 60 and media >= 50:
+            elif media <= 60 and media >= 50:
                 pontuacao = "Média"
             elif media <= 49.99 and media >= 40:
                 pontuacao = "Baixa"
             elif media <= 39.99:
                 pontuacao = "Muito Baixa"
 
-            df_painel = df[df['Goal ' + str(ods) + ' Score'] <= 39.99]
             caixa = tk.Toplevel()
             caixa.title("Media da Pontuação das ODS")
             caixa.geometry("600x300")
