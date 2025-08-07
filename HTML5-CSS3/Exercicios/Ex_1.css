@@ -1,0 +1,64 @@
+body{
+    background-color: rgb(121, 120, 120);
+    color: rgb(12, 12, 12);
+    font-family: 'Courier New', Courier, monospace;
+    border: 3px solid rgb(250, 246, 246);
+    padding: 0px 100px;
+    margin: 10px;
+}
+
+.img_csgo{
+    display: block;
+    margin: 0 auto;
+    padding: 20px;
+    width: 1000px;
+    height: 300px;
+}
+
+.head_fallen{
+    text-align: center;
+    color: rgb(2, 2, 2);
+    font-size: 2.5rem;
+    font-weight: bold; 
+}
+
+.head_fallen img{
+    width: 300px;
+    height: auto;
+    border-radius: 50%;
+    border: 3px solid rgb(2, 192, 240);
+}
+
+.conteudo_fallen p{
+    text-align: left;
+    font-size: 1.5rem;
+    color: rgb(2, 2, 2);
+}
+
+.conteudo_fallen h2{
+    font-size: 40px;
+}
+
+.img_titulos{
+    display: block;       /* 1. Transforma a imagem em um elemento de bloco */
+    margin: 0 auto;       /* 2. Centraliza horizontalmente a imagem */
+    width: 500px;      /* Opcional: Garante que a imagem seja responsiva */
+    height: auto;
+    border: 3px solid rgb(2, 192, 240);
+    border-radius: 10px;
+}
+
+.titulos{
+    text-align: center;
+    color: rgb(22, 17, 92);
+}
+
+.conteudo_titulos{
+    text-align: left;
+    font-size: 1.5rem;
+    color: rgb(2, 2, 2);
+    border: 3px solid rgb(243, 241, 241);
+    border-radius: 5px;
+    margin: 20px 10px;
+    padding: 0px 20px;
+}

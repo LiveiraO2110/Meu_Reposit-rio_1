@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ptBR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex shrink</title>
+
+    <style>
+        .flex {
+            max-width: 400px;
+            display: flex;
+            border: 2px solid black;
+            margin: 5px;
+            color: springgreen;
+        }
+        .item {
+            font-size: 30px;
+            background-color: lightblue;
+            border: 1px solid black;
+            margin: 5px;
+            text-align: center;
+        }
+        .fg-1 {
+            flex-grow: 1;
+        }
+        .fs-2{
+            flex-shrink: 2;
+            flex-basis: 100px;
+        }
+        .fs-1 {
+            flex-shrink: 1;
+        }
+        .fs-0 {
+            flex-shrink: 0;
+            flex-basis: 100px;
+        }
+    </style>
+</head>
+<body>
+    <p>flex-shrink: 1</p>
+    <div class="flex">
+        <div class="item fs-1 fg-1">1</div>
+        <div class="item fs-1 fg-1">2</div>
+        <div class="item fs-1 fg-1">3</div>
+        <div class="item fs-1 fg-1">4</div>
+        <div class="item fs-1 fg-1">5</div>
+    </div>
+
+    <p>flex-shrink: 0 /flex-basis: 100px</p>
+    <div class="flex">
+        <div class="item fs-0 fg-1">1</div>
+        <div class="item fs-0 fg-1">2</div>
+        <div class="item fs-0 fg-1">3</div>
+        <div class="item fs-0 fg-1">4</div>
+        <div class="item fs-0 fg-1">5</div>
+    </div>
+
+    <p>flex-shrink: 2 /flex-basis: 100px</p>
+    <div class="flex">
+        <div class="item fs-2 fg-1">1</div>
+        <div class="item fs-2 fg-1">2</div>
+        <div class="item fs-2 fg-1">3</div>
+        <div class="item fs-2 fg-1">4</div>
+        <div class="item fs-2 fg-1">5</div>
+    </div>
+</body>
+</html>

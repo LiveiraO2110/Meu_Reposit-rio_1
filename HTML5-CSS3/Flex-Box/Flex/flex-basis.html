@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex-basis</title>
+
+    <style>
+        .flex{
+            max-width: 400px;
+            display: flex;
+            border: 2px solid black;
+            margin: 5px;
+            color: springgreen;
+        }
+        .item{
+            font-size: 20px;
+            background-color: lightblue;
+            border: 1px solid black;
+            margin: 5px;
+            text-align: center;
+        }
+        .bauto{
+            flex-basis: auto;
+        }
+        .b-0{
+            flex-basis: 0;
+        }
+        .w100{
+            flex-basis: 100px;
+        }
+        .fg-0{
+            flex-grow: 0;
+        }
+        .fg-1{
+            flex-grow: 1;
+        }
+        .fg-2{
+            flex-grow: 2;
+        }
+    </style>
+</head>
+<body>
+    <p>flex-basis: auto</p>
+    <div class="flex">
+        <div class="item bauto fg-1">1111</div>
+        <div class="item bauto fg-1">22222</div>
+        <div class="item bauto fg-1">33</div>
+        <div class="item bauto fg-1">4444</div>
+    </div>
+
+    <p>flex-basis: 0</p>
+    <div class="flex">
+        <div class="item b-0 fg-1">11111</div>
+        <div class="item b-0 fg-1">22222</div>
+        <div class="item b-0 fg-1">33</div>
+        <div class="item b-0 fg-1">4444</div>
+    </div>
+
+    <p>flex-basis: width 100</p>
+    <div class="flex">
+        <div class="item w100 fg-1">1111</div>
+        <div class="item w100 fg-1">222</div>
+        <div class="item w100 fg-1">3333</div>
+        <div class="item w100 fg-1">4</div>
+    </div>
+</body>
+</html>
