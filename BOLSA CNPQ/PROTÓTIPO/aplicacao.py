@@ -1,7 +1,6 @@
 import tkinter as tk
 from telas.Tela_inicial import TelaInicial
 from telas.Tela_ods import TelaODS
-from telas.Tela_ano import TelaAno
 from telas.Tela_de_espera import TelaDeEspera
 from telas.Tela_Painel import TelaPainel
 from telas.Tela_dados import TelaDados
@@ -18,14 +17,16 @@ class Aplicacao(tk.Tk):
         # Dicionário de telas (frames)
         self.telas = {}
 
-        for Tela in (TelaInicial, TelaODS, TelaAno, TelaDeEspera, TelaPainel, TelaDados):
+        for Tela in (TelaInicial, TelaODS, TelaDeEspera, TelaDados, TelaPainel):
             frame = Tela(self, self)
             self.telas[Tela.__name__] = frame
+            print("Tela registrada:", Tela.__name__)  # <- debug
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.mostrar_tela("TelaInicial")
 
     #método para trocar o frame
     def mostrar_tela(self, nome):
-        frame = self.telas[nome]
-        frame.tkraise()
+        if nome not in self.telas:
+            raise KeyError(f"Tela '{nome}' não encontrada. Telas disponíveis: {list(self.telas.keys())}")
+        self.telas[nome].tkraise()

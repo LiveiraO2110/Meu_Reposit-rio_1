@@ -18,7 +18,7 @@ class TelaInicial(TelaBase):
         imagem.pack(pady=60, padx=230)
        
 
-        self.criar_botao("Iniciar", lambda: controle.mostrar_tela("TelaAno")).pack(pady=30)
+        self.criar_botao("Iniciar", lambda: controle.mostrar_tela("TelaODS")).pack(pady=30)
         self.criar_botao("Sair", controle.destroy).pack(pady=30)
 
     
